@@ -15,6 +15,7 @@ class User {
 
     }
 
+    
     loadFromJSON(json){
 
         for (let name in json){
@@ -102,11 +103,15 @@ class User {
 
     getNewID(){
 
-        if(!window.id) window.id = 0;
+        let usersID = parseInt(localStorage.getItem("usersID"));
 
-        id++
+        if(!usersID) usersID = 0;
 
-        return id;
+        usersID++;
+
+        localStorage.setItem("usersID", usersID);
+
+        return usersID;
 
     }
 
@@ -142,6 +147,24 @@ class User {
 
         //Para armazenar no local store
         localStorage.setItem("users",JSON.stringify(users));
+    }
+
+    remove(){
+
+        let users = User.getUsersStorage();
+
+        users.forEach((userData, index)=>{
+
+            if(this._id == userData._id){
+
+                console.log(index);
+
+                users.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem("users",JSON.stringify(users));
+        
     }
 
 
